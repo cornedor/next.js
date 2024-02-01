@@ -30,6 +30,21 @@ export function normalizeLocalePath(
       pathname = pathnameParts.join('/') || '/'
       return true
     }
+
+    if (
+      pathnameParts[1] &&
+      pathnameParts[1].toLowerCase() === '_next' &&
+      pathnameParts[2] &&
+      pathnameParts[2].toLowerCase() === 'data' &&
+      // Part 3 is a hash, part 4 is the locale
+      pathnameParts[4] &&
+      pathnameParts[4].toLowerCase() === locale.toLowerCase()
+    ) {
+      detectedLocale = locale
+      pathnameParts.splice(4, 1)
+      pathname = pathnameParts.join('/') || '/'
+      return true
+    }
     return false
   })
 
